@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 380px;
+            border-top: 5px solid #007bff;
+            transition: transform 0.3s ease-in-out;
+        }
+        .signup-container:hover {
+            transform: scale(1.02);
+        }
+        h2 {
+            margin-bottom: 25px;
+            color: #333;
+            font-size: 26px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+        .date-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .date-container input {
+            width: 30%;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(45deg, #0056b3, #003d80);
+            transform: scale(1.05);
+        }
+        .links {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .links a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>إنشاء حساب جديد</h2>
+        <form onsubmit="return signupUser(event)">
+            <input type="text" id="username" placeholder="اسم المستخدم" required>
+            <input type="password" id="password" placeholder="كلمة المرور" required>
+            <input type="password" id="confirm-password" placeholder="تأكيد كلمة المرور" required>
+
+            <div class="date-container">
+                <input type="number" id="day" placeholder="اليوم" min="1" max="31">
+                <input type="number" id="month" placeholder="الشهر" min="1" max="12">
+                <input type="number" id="year" placeholder="السنة" min="1900" max="2100">
+            </div>
+            
+            <button type="submit">إنشاء حساب</button>
+        </form>
+        <div class="links">
+            <a href="login.html">لديك حساب بالفعل؟ تسجيل الدخول</a>
+        </div>
+    </div>
+
+    <script>
+        function signupUser(event) {
+            event.preventDefault(); // منع إعادة تحميل الصفحة
+            
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+            var day = document.getElementById("day").value;
+            var month = document.getElementById("month").value;
+            var year = document.getElementById("year").value;
+
+            // التحقق من تطابق كلمة المرور
+            if (password === confirmPassword) {
+                alert("تم إنشاء الحساب بنجاح!");  
+                window.location.href = "login.html"; // تحويل المستخدم لصفحة تسجيل الدخول
+            } else {
+                alert("خطأ: كلمة المرور غير متطابقة!");
+            }
+        }
+    </script>
+</body>
+</html>

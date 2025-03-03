@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن - المحراب</title>
+    <style>
+        :root {
+            --primary-color: #2A6D8F;
+            --accent-color: #D4AF37;
+            --light-bg: #f8f9fa;
+            --text-dark: #2B2D42;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Amiri', serif;
+        }
+
+        body {
+            background: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* شريط التنقل */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* محتوى الصفحة */
+        .about-container {
+            max-width: 1200px;
+            margin: 100px auto 0;
+            padding: 2rem;
+        }
+
+        /* قسم القيم */
+        .values-section {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .value-card p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* أنيميشنات */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* التجاوب */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .about-container {
+                padding: 1rem;
+                margin-top: 80px;
+            }
+
+            .values-section {
+                grid-template-columns: 1fr;
+            }
+
+            .value-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav class="nav-container animate-in">
+        <a href="index.html" class="logo">المحرا<span>ب</span></a>
+    </nav>
+
+    <!-- محتوى الصفحة -->
+    <main class="about-container">
+        <!-- قسم القيم -->
+        <section class="values-section">
+            <div class="value-card animate-in">
+                <div class="value-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>رؤيتنا</h3>
+                <p>
+                    أن نكون المرجع الأول في العالم الإسلامي لفهم الدين الحق، 
+                    ونسعى لتحقيق ذلك من خلال تقديم محتوى شرعي موثوق ومفيد.
+                </p>
+            </div>
+            <div class="value-card animate-in" style="animation-delay: 0.2s;">
+                <div class="value-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3>رسالتنا</h3>
+                <p>
+                    تقديم محتوى إسلامي يعزز الفهم الصحيح للدين، 
+                    وتبسيط العلوم الشرعية لخدمة المجتمع الإسلامي.
+                </p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

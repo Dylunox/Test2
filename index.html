@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-abc123'; style-src 'self' 'nonce-abc123'; img-src 'self' data:;">
+  <meta name="referrer" content="no-referrer">
+  <title>المحراب</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style nonce="abc123">
+    :root {
+      --primary-color: #2C5182;
+      --secondary-color: #F8F4EF;
+      --accent-color: #C89117;
+      --light-bg: #D7C5BB;
+      --dark-bg: #1E1E1E;
+      --text-light: #FFFFFF;
+      --text-dark: #2B2D42;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--light-bg) 0%, #e6e6e6 100%);
+      color: var(--text-dark);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(135deg, var(--dark-bg) 0%, #2d2d2d 100%);
+        color: var(--text-light);
+      }
+    }
+
+    .welcome-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      animation: fadeIn 0.5s ease-out;
+      color: white;
+    }
+
+    .welcome-content {
+      text-align: center;
+      padding: 2rem;
+      max-width: 600px;
+    }
+
+    .welcome-title {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: scaleUp 0.5s ease-out;
+    }
+
+    .welcome-text {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    body:not(.show-welcome) .welcome-overlay {
+      display: none;
+    }
+
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .hero-image {
+      position: relative;
+      width: 94%;
+      height: 70vh;
+      min-height: 400px;
+      margin: 1rem auto;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      background-image: url('images/slider/imag1.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+      margin-top: 70px;
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, 
+        rgba(0,0,0,0) 30%,
+        rgba(0,0,0,0.6) 70%,
+        rgba(0,0,0,0.8) 90%);
+      z-index: 1;
+    }
+
+    .image-content {
+      position: relative;
+      padding: 2rem;
+      z-index: 2;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+      width: 100%;
+      padding-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent-color);
+      animation: slideUp 1s ease;
+    }
+
+    .sheikh-name {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-light);
+      line-height: 1.2;
+    }
+
+    .sheikh-quote {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      line-height: 1.6;
+      max-width: 800px;
+      border-right: 3px solid var(--accent-color);
+      padding-right: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+    }
+
+    .service-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .verses-section {
+      padding: 2rem 1rem;
+      background: var(--light-bg);
+      border-radius: 16px;
+      margin: 2rem 1rem;
+    }
+
+    .verses-section h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    .verses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .verse-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .verse-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .verse-text {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .verse-tafseer {
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body .verses-section {
+        background: #333;
+      }
+      
+      body .verse-card {
+        background: #444;
+        border-color: #555;
+      }
+    }
+
+    .footer {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      text-align: center;
+      margin: 2rem 1rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    .social-media {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-media a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-media a:hover {
+      color: var(--accent-color);
+    }
+
+    @media (max-width: 1200px) {
+      .hero-image {
+        height: 60vh;
+        min-height: 350px;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .sheikh-name {
+        font-size: 1.8rem;
+      }
+      
+      .sheikh-quote {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-bar {
+        padding: 0.5rem 1rem;
+        height: 60px;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .hero-image {
+        height: 50vh;
+        min-height: 300px;
+        margin-top: 60px;
+        width: 92%;
+      }
+      
+      .image-content {
+        padding: 1.5rem;
+        padding-bottom: 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 1.6rem;
+      }
+      
+      .sheikh-name {
+        font-size: 1.4rem;
+      }
+      
+      .sheikh-quote {
+        font-size: 0.9rem;
+        padding-right: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-image {
+        height: 45vh;
+        min-height: 250px;
+      }
+      
+      .sheikh-quote {
+        font-size: 0.8rem;
+      }
+      
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="welcome-overlay">
+    <div class="welcome-content">
+      <h1 class="welcome-title">المحراب</h1>
+      <p class="welcome-text">أهلا بكم في موقع الأول في عُمان بفكرته</p>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <a href="index.html" class="logo">المحرا<span style="color: var(--accent-color);">ب</span></a>
+  </nav>
+
+  <main class="main-content">
+    <div class="hero-image">
+      <div class="image-content">
+        <h2 class="hero-title">علماء عُمان</h2>
+        <h1 class="sheikh-name">الشيخ أحمد بن حمد الخليلي</h1>
+        <p class="sheikh-quote">
+          "العلم نور والجهل ظلام، والحكمة ضالة المؤمن أنى وجدها فهو أحق الناس بها"
+          <br>
+          مفتي عام السلطنة، إمام الوسطية، ورائد التجديد الفقهي
+        </p>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      <a href="fatwa-library.html" class="service-card">
+        <h3>مكتبة الفتوى</h3>
+        <p>تصفح مكتبة الفتاوى الموثوقة والمصنفة</p>
+      </a>
+      <a href="about-us.html" class="service-card">
+        <h3>من نحن</h3>
+        <p>تعرف على فريق العمل ورؤيتنا ورسالتنا</p>
+      </a>
+      <a href="contact.html" class="service-card">
+        <h3>تواصل معنا</h3>
+        <p>نحن هنا لمساعدتك في أي استفسار</p>
+      </a>
+    </div>
+
+    <section class="verses-section">
+      <h2>آيات مختارة مع التفسير</h2>
+      <div class="verses-grid">
+        <div class="verse-card">
+          <p class="verse-text">شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ</p>
+          <p class="verse-tafseer">تفسير: رمضان شهر نزول القرآن، شهر الرحمة والمغفرة.</p>
+        </div>
+        <div class="verse-card">
+          <p class="verse-text">بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>
+          <p class="verse-tafseer">تفسير: بدء كل شيء باسم الله الرحمن الرحيم.</p>
+        </div>
+        <div class="verse-card">
+          <p class="verse-text">الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</p>
+          <p class="verse-tafseer">تفسير: الحمد والثناء لله رب العالمين.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="social-media">
+      <a href="https://facebook.com" target="_blank">فيسبوك</a>
+      <a href="https://twitter.com" target="_blank">تويتر</a>
+    </div>
+  </footer>
+
+  <script nonce="abc123">
+    if (!localStorage.getItem('firstVisit')) {
+      localStorage.setItem('firstVisit', 'true');
+      document.body.classList.add('show-welcome');
+    }
+
+    document.querySelector('.welcome-overlay').addEventListener('animationend', () => {
+      document.body.classList.remove('show-welcome');
+    });
+  </script>
+</body>
+</html>

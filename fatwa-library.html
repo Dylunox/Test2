@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتبة الفتاوى - المحراب</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style nonce="abc123">
+    :root {
+      --primary-color: #2C5182;
+      --secondary-color: #F8F4EF;
+      --accent-color: #C89117;
+      --light-bg: #D7C5BB;
+      --dark-bg: #1E1E1E;
+      --text-light: #FFFFFF;
+      --text-dark: #2B2D42;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--light-bg) 0%, #e6e6e6 100%);
+      color: var(--text-dark);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(135deg, var(--dark-bg) 0%, #2d2d2d 100%);
+        color: var(--text-light);
+      }
+    }
+
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .fatwa-container {
+      max-width: 1200px;
+      margin: 90px auto 2rem;
+      padding: 0 1rem;
+    }
+
+    .loading {
+      text-align: center;
+      font-size: 1.5rem;
+      padding: 2rem;
+      color: var(--primary-color);
+    }
+
+    .error-message {
+      background: #ffebee;
+      color: #b71c1c;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 2px solid #ffcdd2;
+      margin: 2rem auto;
+      max-width: 600px;
+      text-align: center;
+      display: none;
+    }
+
+    .error-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .retry-button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .retry-button:hover {
+      opacity: 0.9);
+    }
+
+    .category-section {
+      margin: 3rem 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .category-title {
+      font-size: 2rem;
+      color: var(--accent-color);
+      margin-bottom: 1.5rem;
+      padding-right: 1rem;
+      border-right: 4px solid var(--primary-color);
+    }
+
+    .fatwa-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+
+    .fatwa-card {
+      background: var(--secondary-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.1);
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .fatwa-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .fatwa-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60px;
+      height: 60px;
+      background: var(--primary-color);
+      clip-path: polygon(0 0, 100% 0, 100% 100%);
+      border-radius: 0 12px 0 0;
+    }
+
+    .fatwa-card::after {
+      content: "✿";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .question {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .answer {
+      line-height: 1.6;
+      flex-grow: 1;
+      color: var(--text-dark);
+    }
+
+    .fatwa-date {
+      text-align: left;
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      margin-top: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--light-bg);
+    }
+
+    .more-button {
+      background: var(--primary-color);
+      color: white !important;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      margin-top: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .more-button:hover {
+      background: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
+    .more-button i {
+      transition: transform 0.3s ease;
+    }
+
+    .more-button.active i {
+      transform: rotate(45deg);
+    }
+
+    .more-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      background: var(--glass-bg);
+      margin-top: 1rem;
+      padding: 0 1rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-color);
+    }
+
+    .more-content.active {
+      max-height: 500px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-bar {
+        padding: 0.5rem 1rem;
+        height: 60px;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .fatwa-container {
+        margin-top: 70px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .fatwa-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .category-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav-bar">
+    <a href="index.html" class="logo">المحرا<span style="color: var(--accent-color);">ب</span></a>
+  </nav>
+
+  <div class="fatwa-container">
+    <div class="loading">جاري تحميل الفتاوى...</div>
+    <div class="error-message">
+      <div class="error-icon">⚠️</div>
+      <h3>حدث خطأ في تحميل الفتاوى</h3>
+      <p>الرجاء المحاولة مرة أخرى لاحقًا</p>
+      <button class="retry-button" onclick="fetchExcelFile()">إعادة المحاولة</button>
+    </div>
+  </div>
+
+  <script nonce="abc123">
+    const EXCEL_FILE_URL = 'https://docs.google.com/spreadsheets/d/1CB80Z9Kzta6XBtLFXpZ8Wewgd6YyxA_SIF9KJOffu1E/edit?usp=drivesdk';
+
+    async function fetchExcelFile() {
+      try {
+        document.querySelector('.loading').style.display = 'block';
+        document.querySelector('.error-message').style.display = 'none';
+
+        const response = await fetch(EXCEL_FILE_URL);
+        if (!response.ok) throw new Error('خطأ في الاتصال: ' + response.statusText);
+
+        const arrayBuffer = await response.arrayBuffer();
+        const data = new Uint8Array(arrayBuffer);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+        const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+        // تجاهل الأعمدة A(0), B(1), C(2) والاحتفاظ بـ D(3) فما بعد
+        const filteredData = jsonData.map(row => row.slice(3));
+
+        // الفهرس الجديد بعد الاستبعاد:
+        // D => 0 (category)
+        // E => 1 (question)
+        // F => 2 (answer)
+        // G => 3 (date)
+        // H => 4 (المزيد)
+
+        const fatwas = filteredData.slice(1).map(row => {
+          return {
+            category: row[0] || 'غير مصنف',
+            question: row[1] || 'بدون عنوان',
+            answer: row[2] || 'لا يوجد محتوى',
+            date: row[3] || 'غير معروف',
+            moreInfo: row[4] || ''
+          };
+        });
+
+        renderFatwas(fatwas);
+      } catch (error) {
+        console.error('Error:', error);
+        document.querySelector('.loading').style.display = 'none';
+        document.querySelector('.error-message').style.display = 'block';
+        document.querySelector('.error-message h3').innerHTML = `
+          ${error.message}
+        `;
+      }
+    }
+
+    function renderFatwas(fatwas) {
+      const container = document.querySelector('.fatwa-container');
+      container.innerHTML = '';
+
+      const categories = [...new Set(fatwas.map(f => f.category))];
+      
+      categories.forEach(category => {
+        const section = document.createElement('section');
+        section.className = 'category-section';
+        section.innerHTML = `
+          <h2 class="category-title">${category}</h2>
+          <div class="fatwa-grid"></div>
+        `;
+
+        const filtered = fatwas.filter(f => f.category === category);
+        filtered.forEach(fatwa => {
+          const card = document.createElement('div');
+          card.className = 'fatwa-card';
+          
+          const moreContent = fatwa.moreInfo ? `
+            <button class="more-button" onclick="toggleMoreContent(this)">
+              <i class="fas fa-plus"></i>
+              المزيد من التفاصيل
+            </button>
+            <div class="more-content">
+              ${fatwa.moreInfo}
+            </div>
+          ` : '';
+
+          card.innerHTML = `
+            <div class="question">${fatwa.question}</div>
+            <div class="answer">${fatwa.answer}</div>
+            <div class="fatwa-date">📅 ${fatwa.date}</div>
+            ${moreContent}
+          `;
+
+          section.querySelector('.fatwa-grid').appendChild(card);
+        });
+
+        container.appendChild(section);
+      });
+
+      document.querySelector('.loading').style.display = 'none';
+    }
+
+    function toggleMoreContent(button) {
+      const content = button.nextElementSibling;
+      button.classList.toggle('active');
+      content.classList.toggle('active');
+      
+      const icon = button.querySelector('i');
+      icon.classList.toggle('fa-plus');
+      icon.classList.toggle('fa-times');
+    }
+
+    window.addEventListener('DOMContentLoaded', fetchExcelFile);
+  </script>
+</body>
+</html>
