@@ -5,6 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>مكتبة الفتاوى - المحراب</title>
+  <!-- إضافة خطوط جوجل -->
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&family=Rubik:ital,wght@0,300..900;1,300..900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style nonce="abc123">
@@ -24,13 +26,15 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Tajawal', sans-serif;
     }
 
     body {
       background: linear-gradient(135deg, var(--light-bg) 0%, #e6e6e6 100%);
       color: var(--text-dark);
       min-height: 100vh;
+      font-family: 'Tajawal', sans-serif; /* الخط الأساسي للنصوص */
+      font-size: 1.1em;
+      line-height: 1.8;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -40,6 +44,38 @@
       }
     }
 
+    /* تطبيق خط Reem Kufi للعناوين */
+    h1, h2, h3, h4, h5, h6, .logo, .question {
+      font-family: 'Reem Kufi', sans-serif;
+      font-weight: 600;
+    }
+
+    .logo {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .question {
+      font-size: 1.4rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+      line-height: 2.2;
+    }
+
+    /* تطبيق خط Rubik للنصوص الإنجليزية */
+    .english-text {
+      font-family: 'Rubik', sans-serif;
+      font-weight: 400;
+    }
+
+    /* بقية الأنماط بدون تغيير */
     .nav-bar {
       position: fixed;
       top: 0;
@@ -62,18 +98,6 @@
       align-items: center;
       gap: 2rem;
       flex: 1;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: transform 0.3s ease;
-    }
-
-    .logo:hover {
-      transform: scale(1.05);
     }
 
     .category-select {
@@ -184,13 +208,6 @@
       transition: all 0.3s ease;
     }
 
-    .question {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: var(--accent-color);
-      margin-bottom: 1rem;
-    }
-
     .answer {
       line-height: 1.6;
       margin-bottom: 1rem;
@@ -198,6 +215,8 @@
       background: rgba(255, 255, 255, 0.05);
       border-radius: 8px;
       border-right: 3px solid var(--primary-color);
+      font-size: 1.15rem;
+      text-align: justify;
     }
 
     .details-btn {
@@ -317,7 +336,7 @@
   </div>
 
   <script nonce="abc123">
-    const EXCEL_FILE = 'https://docs.google.com/spreadsheets/d/1CB80Z9Kzta6XBtLFXpZ8Wewgd6YyxA_SIF9KJOffu1E/edit?usp=sharing';
+    const EXCEL_FILE = 'https://docs.google.com/spreadsheets/d/1CB80Z9Kzta6XBtLFXpZ8Wewgd6YyxA_SIF9KJOffu1E/edit?usp=drivesdk';
     const SHEET_MAP = {
       'صلاة': 'Sheet1',
       'زكاة': 'Sheet2',
